@@ -128,8 +128,8 @@ struct CreateTallyView: View {
                             }
                         }
                         
-                        // No results or empty search - show create option
-                        if filteredPeople.isEmpty || !searchText.isEmpty {
+                        // Show create option when no results match the search
+                        if filteredPeople.isEmpty {
                             Button {
                                 showingCreatePersonSection.toggle()
                                 if showingCreatePersonSection && !searchText.isEmpty {
