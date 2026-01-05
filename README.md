@@ -66,6 +66,8 @@ TallyHishab/
 │   └── Transaction.swift         # Transaction data model
 ├── Views/
 │   ├── ContentView.swift         # Main tab view
+│   ├── CreateTally/
+│   │   └── CreateTallyView.swift # Quick tally creation with search
 │   ├── Dashboard/
 │   │   └── DashboardView.swift   # Summary and overview
 │   ├── Person/
