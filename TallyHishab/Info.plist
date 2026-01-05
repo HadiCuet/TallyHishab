@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSContactsUsageDescription</key>
+	<string>We need access to your contacts to help you quickly add people to track transactions.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to attach receipt images to transactions.</string>
+</dict>
+</plist>
