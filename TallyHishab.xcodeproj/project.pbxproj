@@ -39,6 +39,8 @@
 		A115 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		C0110007 /* CreateTallyPersonSelectorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0110017 /* CreateTallyPersonSelectorSection.swift */; };
 		C0110100 /* CreateTallyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0110101 /* CreateTallyViewModel.swift */; };
+		DEADBEEFDEADBEEFDEAD0003 /* TallyHishabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEADBEEFDEADBEEFDEAD0001 /* TallyHishabApp.swift */; };
+		DEADBEEFDEADBEEFDEAD0004 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEADBEEFDEADBEEFDEAD0002 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +61,8 @@
 		6274EE942F0E03CC0053C958 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C0110017 /* CreateTallyPersonSelectorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyPersonSelectorSection.swift; sourceTree = "<group>"; };
 		C0110101 /* CreateTallyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyViewModel.swift; sourceTree = "<group>"; };
+		DEADBEEFDEADBEEFDEAD0001 /* TallyHishabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TallyHishabApp.swift; sourceTree = "<group>"; };
+		DEADBEEFDEADBEEFDEAD0002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,7 @@
 		D101 /* TallyHishab */ = {
 			isa = PBXGroup;
 			children = (
+				DEADBEEFDEADBEEFDEAD0001 /* TallyHishabApp.swift */,
 				D103 /* Models */,
 				D104 /* Views */,
 				D105 /* Helpers */,
@@ -121,6 +126,7 @@
 		D104 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DEADBEEFDEADBEEFDEAD0002 /* ContentView.swift */,
 				6274EE742F0DE62F0053C958 /* CreateTally */,
 				D106 /* Dashboard */,
 				D107 /* Person */,
@@ -202,7 +208,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					E100 = {
 						CreatedOnToolsVersion = 15.0;
@@ -243,6 +249,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEADBEEFDEADBEEFDEAD0003 /* TallyHishabApp.swift in Sources */,
+				DEADBEEFDEADBEEFDEAD0004 /* ContentView.swift in Sources */,
 				A101 /* (null) in Sources */,
 				A102 /* (null) in Sources */,
 				A104 /* (null) in Sources */,
@@ -338,6 +346,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -394,6 +403,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
