@@ -23,6 +23,7 @@
 		A113 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B113 /* TransactionDetailView.swift */; };
 		A114 /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114 /* SettlementView.swift */; };
 		A115 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115 /* DashboardView.swift */; };
+		C0110007 /* CreateTallyPersonSelectorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0110017 /* CreateTallyPersonSelectorSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		B113 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		B114 /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
 		B115 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		C0110017 /* CreateTallyPersonSelectorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyPersonSelectorSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				6274EE732F0DE62F0053C958 /* CreateTallyView.swift */,
+				C0110017 /* CreateTallyPersonSelectorSection.swift */,
 			);
 			path = CreateTally;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				A113 /* TransactionDetailView.swift in Sources */,
 				A114 /* SettlementView.swift in Sources */,
 				A115 /* DashboardView.swift in Sources */,
+				C0110007 /* CreateTallyPersonSelectorSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

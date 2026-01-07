@@ -56,212 +56,42 @@ struct CreateTallyView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // Transaction Type Selection
-                Section {
-                    Picker("Transaction Type", selection: $transactionType) {
-                        Label("Borrow", systemImage: "arrow.down.circle.fill")
-                            .tag(TransactionType.borrow)
-                        
-                        Label("Lend", systemImage: "arrow.up.circle.fill")
-                        .tag(TransactionType.lend)
-                    }
-                    .pickerStyle(.segmented)
-                    .listRowBackground(Color.clear)
-                } header: {
-                    Text("What do you want to do?")
-                }
-                
-                // Person Selection Section
-                Section {
-                    if let person = selectedPerson {
-                        // Selected person display
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(person.name)
-                                    .font(.headline)
-                                Text(person.mobile)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                                if let relationship = person.relationship, !relationship.isEmpty {
-                                    Text(relationship)
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                            
-                            Spacer()
-                            
-                            Button("Change") {
-                                selectedPerson = nil
-                                searchText = ""
-                            }
-                            .buttonStyle(.bordered)
-                        }
-                        .padding(.vertical, 4)
-                    } else {
-                        // Search field
-                        TextField("Search by name or mobile", text: $searchText)
-                            .textContentType(.telephoneNumber)
-                        
-                        // Filtered results
-                        if !searchText.isEmpty && !filteredPeople.isEmpty {
-                            ForEach(filteredPeople.prefix(5)) { person in
-                                Button {
-                                    selectedPerson = person
-                                    searchText = ""
-                                } label: {
-                                    HStack {
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text(person.name)
-                                                .font(.subheadline)
-                                                .foregroundStyle(.primary)
-                                            Text(person.mobile)
-                                                .font(.caption)
-                                                .foregroundStyle(.secondary)
-                                        }
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                            }
-                        }
-                        
-                        // Show create option when no results match the search
-                        if filteredPeople.isEmpty {
-                            Button {
-                                showingCreatePersonSection.toggle()
-                                if showingCreatePersonSection && !searchText.isEmpty {
-                                    // Pre-fill if search text looks like a phone number
-                                    if searchText.first?.isNumber == true || searchText.first == "+" {
-                                        newPersonMobile = searchText
-                                    } else {
-                                        newPersonName = searchText
-                                    }
-                                }
-                            } label: {
-                                Label(
-                                    showingCreatePersonSection ? "Hide Create Person" : "Create New Person",
-                                    systemImage: showingCreatePersonSection ? "minus.circle" : "plus.circle"
-                                )
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Select Person")
-                } footer: {
-                    if selectedPerson == nil {
-                        Text("Search existing contacts by name or mobile number")
-                    }
-                }
-                
-                // Create New Person Section (expandable)
-                if showingCreatePersonSection && selectedPerson == nil {
-                    Section {
-                        Button {
-                            showingContactPicker = true
-                        } label: {
-                            Label("Pick from Contacts", systemImage: "person.crop.circle.badge.plus")
-                        }
-                        
-                        TextField("Name", text: $newPersonName)
-                            .textContentType(.name)
-                            .autocorrectionDisabled()
-                        
-                        TextField("Mobile Number", text: $newPersonMobile)
-                            .textContentType(.telephoneNumber)
-                            .keyboardType(.phonePad)
-                        
-                        TextField("Relationship (Optional)", text: $newPersonRelationship)
-                            .autocorrectionDisabled()
-                        
-                        Button {
-                            createAndSelectPerson()
-                        } label: {
-                            Label("Add & Select Person", systemImage: "checkmark.circle.fill")
-                        }
-                        .disabled(!isNewPersonValid)
-                    } header: {
-                        Text("New Person Details")
-                    }
-                }
-                
-                // Amount Section
-                Section {
-                    HStack {
-                        Text("৳")
-                            .font(.title2)
-                            .foregroundStyle(.secondary)
-                        TextField("Amount", value: $amount, format: .number)
-                            .keyboardType(.decimalPad)
-                            .font(.title2)
-                    }
-                } header: {
-                    Text("Amount")
-                }
-                
-                // Transaction Details Section
-                Section {
-                    Button {
-                        showingTransactionDatePicker = true
-                    } label: {
-                        HStack {
-                            Text("Transaction Date")
-                            Spacer()
-                            Text(date.formatted(date: .abbreviated, time: .omitted))
-                                .foregroundStyle(.secondary)
-                        }
-                    }
+                CreateTallyTransactionTypeSection(transactionType: $transactionType)
 
-                    Picker("Payment Mode", selection: $mode) {
-                        ForEach(PaymentMode.allCases, id: \.self) { paymentMode in
-                            Text(paymentMode.rawValue).tag(paymentMode)
-                        }
-                    }
-                } header: {
-                    Text("Transaction Details")
-                }
-                
-                // Return Date Section
-                Section {
-                    Button {
-                        // If the value is currently nil, initialize a sensible default before opening.
-                        let today = Calendar.current.startOfDay(for: Date())
-                        if let existing = returnDate {
-                            returnDateDraft = max(existing, today)
-                        } else {
-                            returnDateDraft = today
-                        }
-                        showingReturnDatePicker = true
-                    } label: {
-                        HStack {
-                            Text("Return By")
-                            Spacer()
-                            if let returnDate {
-                                Text(returnDate.formatted(date: .abbreviated, time: .omitted))
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text("Not set")
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Return Date (Optional)")
-                } footer: {
-                    Text("Tap to set a reminder date for when the money should be returned")
-                }
-                
-                // Note Section
+                CreateTallyPersonSelectorSection(
+                    filteredPeople: filteredPeople,
+                    isNewPersonValid: isNewPersonValid,
+                    searchText: $searchText,
+                    selectedPerson: $selectedPerson,
+                    showingCreatePersonSection: $showingCreatePersonSection,
+                    newPersonName: $newPersonName,
+                    newPersonMobile: $newPersonMobile,
+                    newPersonRelationship: $newPersonRelationship,
+                    showingContactPicker: $showingContactPicker,
+                    addAction: createAndSelectPerson
+                )
+
+                CreateTallyAmountSection(amount: $amount)
+
+                CreateTallyTransactionDetailsSection(
+                    date: $date,
+                    mode: $mode,
+                    showingTransactionDatePicker: $showingTransactionDatePicker
+                )
+
+                CreateTallyReturnDateSection(
+                    returnDate: $returnDate,
+                    returnDateDraft: $returnDateDraft,
+                    showingReturnDatePicker: $showingReturnDatePicker
+                )
+
                 Section {
                     TextField("Add a note about this transaction", text: $note, axis: .vertical)
                         .lineLimit(2...4)
                 } header: {
                     Text("Note (Optional)")
                 }
-                
-                // Receipt Image Section
+
                 Section {
                     ImagePicker(imageData: $recordImage)
                 } header: {
@@ -269,8 +99,7 @@ struct CreateTallyView: View {
                 } footer: {
                     Text("Attach a photo of receipt, cheque, or any transaction proof")
                 }
-                
-                // Save Button
+
                 Section {
                     Button {
                         saveTally()
@@ -418,6 +247,111 @@ struct CreateTallyView: View {
         newPersonName = ""
         newPersonMobile = ""
         newPersonRelationship = ""
+    }
+}
+
+struct CreateTallyTransactionTypeSection: View {
+    @Binding var transactionType: TransactionType
+
+    var body: some View {
+        Section {
+            Picker("Transaction Type", selection: $transactionType) {
+                Label("Borrow", systemImage: "arrow.down.circle.fill")
+                    .tag(TransactionType.borrow)
+                
+                Label("Lend", systemImage: "arrow.up.circle.fill")
+                .tag(TransactionType.lend)
+            }
+            .pickerStyle(.segmented)
+            .listRowBackground(Color.clear)
+        } header: {
+            Text("What do you want to do?")
+        }
+    }
+}
+
+struct CreateTallyAmountSection: View {
+    @Binding var amount: Double
+
+    var body: some View {
+        Section {
+            HStack {
+                Text("৳")
+                    .font(.title2)
+                    .foregroundStyle(.secondary)
+                TextField("Amount", value: $amount, format: .number)
+                    .keyboardType(.decimalPad)
+                    .font(.title2)
+            }
+        } header: {
+            Text("Amount")
+        }
+    }
+}
+
+struct CreateTallyTransactionDetailsSection: View {
+    @Binding var date: Date
+    @Binding var mode: PaymentMode
+    @Binding var showingTransactionDatePicker: Bool
+
+    var body: some View {
+        Section {
+            Button {
+                showingTransactionDatePicker = true
+            } label: {
+                HStack {
+                    Text("Transaction Date")
+                    Spacer()
+                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Picker("Payment Mode", selection: $mode) {
+                ForEach(PaymentMode.allCases, id: \.self) { paymentMode in
+                    Text(paymentMode.rawValue).tag(paymentMode)
+                }
+            }
+        } header: {
+            Text("Transaction Details")
+        }
+    }
+}
+
+struct CreateTallyReturnDateSection: View {
+    @Binding var returnDate: Date?
+    @Binding var returnDateDraft: Date
+    @Binding var showingReturnDatePicker: Bool
+
+    var body: some View {
+        Section {
+            Button {
+                // If the value is currently nil, initialize a sensible default before opening.
+                let today = Calendar.current.startOfDay(for: Date())
+                if let existing = returnDate {
+                    returnDateDraft = max(existing, today)
+                } else {
+                    returnDateDraft = today
+                }
+                showingReturnDatePicker = true
+            } label: {
+                HStack {
+                    Text("Return By")
+                    Spacer()
+                    if let returnDate {
+                        Text(returnDate.formatted(date: .abbreviated, time: .omitted))
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text("Not set")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+        } header: {
+            Text("Return Date (Optional)")
+        } footer: {
+            Text("Tap to set a reminder date for when the money should be returned")
+        }
     }
 }
 
