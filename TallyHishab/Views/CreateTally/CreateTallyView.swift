@@ -15,14 +15,20 @@ struct CreateTallyView: View {
     @State private var showingContactPicker = false
     
     // Transaction details
-    @State private var transactionType: TransactionType = .lend
+    @State private var transactionType: TransactionType = .borrow
     @State private var amount: Double = 0
     @State private var date = Date()
     @State private var mode: PaymentMode = .cash
-    @State private var hasReturnDate = false
-    @State private var returnDate = Date()
+    @State private var returnDate: Date? = nil
     @State private var recordImage: Data?
     @State private var note = ""
+
+    // Date picker presentation
+    @State private var showingTransactionDatePicker = false
+    @State private var showingReturnDatePicker = false
+
+    // Used to drive the return-date DatePicker (since it can’t bind to an optional directly)
+    @State private var returnDateDraft = Date()
     
     // UI State
     @State private var showingSuccessAlert = false
@@ -53,17 +59,11 @@ struct CreateTallyView: View {
                 // Transaction Type Selection
                 Section {
                     Picker("Transaction Type", selection: $transactionType) {
-                        HStack {
-                            Image(systemName: "arrow.up.circle.fill")
-                            Text("Lend")
-                        }
-                        .tag(TransactionType.lend)
+                        Label("Borrow", systemImage: "arrow.down.circle.fill")
+                            .tag(TransactionType.borrow)
                         
-                        HStack {
-                            Image(systemName: "arrow.down.circle.fill")
-                            Text("Borrow")
-                        }
-                        .tag(TransactionType.borrow)
+                        Label("Lend", systemImage: "arrow.up.circle.fill")
+                        .tag(TransactionType.lend)
                     }
                     .pickerStyle(.segmented)
                     .listRowBackground(Color.clear)
@@ -203,8 +203,17 @@ struct CreateTallyView: View {
                 
                 // Transaction Details Section
                 Section {
-                    DatePicker("Transaction Date", selection: $date, displayedComponents: .date)
-                    
+                    Button {
+                        showingTransactionDatePicker = true
+                    } label: {
+                        HStack {
+                            Text("Transaction Date")
+                            Spacer()
+                            Text(date.formatted(date: .abbreviated, time: .omitted))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+
                     Picker("Payment Mode", selection: $mode) {
                         ForEach(PaymentMode.allCases, id: \.self) { paymentMode in
                             Text(paymentMode.rawValue).tag(paymentMode)
@@ -216,15 +225,32 @@ struct CreateTallyView: View {
                 
                 // Return Date Section
                 Section {
-                    Toggle("Set Return Date", isOn: $hasReturnDate)
-                    
-                    if hasReturnDate {
-                        DatePicker("Return By", selection: $returnDate, in: Date()..., displayedComponents: .date)
+                    Button {
+                        // If the value is currently nil, initialize a sensible default before opening.
+                        let today = Calendar.current.startOfDay(for: Date())
+                        if let existing = returnDate {
+                            returnDateDraft = max(existing, today)
+                        } else {
+                            returnDateDraft = today
+                        }
+                        showingReturnDatePicker = true
+                    } label: {
+                        HStack {
+                            Text("Return By")
+                            Spacer()
+                            if let returnDate {
+                                Text(returnDate.formatted(date: .abbreviated, time: .omitted))
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text("Not set")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
                     }
                 } header: {
                     Text("Return Date (Optional)")
                 } footer: {
-                    Text("Set a reminder date for when the money should be returned")
+                    Text("Tap to set a reminder date for when the money should be returned")
                 }
                 
                 // Note Section
@@ -268,6 +294,65 @@ struct CreateTallyView: View {
             .sheet(isPresented: $showingContactPicker) {
                 ContactPicker(selectedName: $newPersonName, selectedPhone: $newPersonMobile)
             }
+            .sheet(isPresented: $showingTransactionDatePicker) {
+                NavigationStack {
+                    VStack {
+                        DatePicker(
+                            "Transaction Date",
+                            selection: $date,
+                            displayedComponents: .date
+                        )
+                        .datePickerStyle(.graphical)
+                        .padding()
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                showingTransactionDatePicker = false
+                            }
+                        }
+                    }
+                    .onChange(of: date) { _, _ in
+                        showingTransactionDatePicker = false
+                    }
+                }
+                .presentationDetents([.large])
+            }
+            .sheet(isPresented: $showingReturnDatePicker) {
+                NavigationStack {
+                    VStack {
+                        DatePicker(
+                            "Return By",
+                            selection: $returnDateDraft,
+                            in: Date()...,
+                            displayedComponents: .date
+                        )
+                        .datePickerStyle(.graphical)
+                        .padding()
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                // Persist whatever is currently selected.
+                                returnDate = returnDateDraft
+                                showingReturnDatePicker = false
+                            }
+                        }
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Clear") {
+                                returnDate = nil
+                                showingReturnDatePicker = false
+                            }
+                        }
+                    }
+                    .onChange(of: returnDateDraft) { _, newValue in
+                        // Auto-dismiss as soon as the user picks a date.
+                        returnDate = newValue
+                        showingReturnDatePicker = false
+                    }
+                }
+                .presentationDetents([.medium])
+            }
             .alert("Tally Created!", isPresented: $showingSuccessAlert) {
                 Button("OK") {
                     resetForm()
@@ -308,7 +393,7 @@ struct CreateTallyView: View {
             date: date,
             mode: mode,
             recordImage: recordImage,
-            returnDate: hasReturnDate ? returnDate : nil,
+            returnDate: returnDate,
             type: transactionType,
             note: note.isEmpty ? nil : note
         )
@@ -326,8 +411,7 @@ struct CreateTallyView: View {
         amount = 0
         date = Date()
         mode = .cash
-        hasReturnDate = false
-        returnDate = Date()
+        returnDate = nil
         recordImage = nil
         note = ""
         showingCreatePersonSection = false
