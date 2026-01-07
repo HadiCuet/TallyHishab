@@ -3,97 +3,46 @@ import SwiftData
 
 struct CreateTallyView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Person.name) private var allPeople: [Person]
-    
-    // Person selection/creation
-    @State private var searchText = ""
-    @State private var selectedPerson: Person?
-    @State private var showingCreatePersonSection = false
-    @State private var newPersonName = ""
-    @State private var newPersonMobile = ""
-    @State private var newPersonRelationship = ""
-    @State private var showingContactPicker = false
-    
-    // Transaction details
-    @State private var transactionType: TransactionType = .borrow
-    @State private var amount: Double = 0
-    @State private var date = Date()
-    @State private var mode: PaymentMode = .cash
-    @State private var returnDate: Date? = nil
-    @State private var recordImage: Data?
-    @State private var note = ""
+    @Query(sort: [SortDescriptor(\Person.name, order: .forward)]) private var allPeople: [Person]
 
-    // Date picker presentation
-    @State private var showingTransactionDatePicker = false
-    @State private var showingReturnDatePicker = false
+    @StateObject private var vm = CreateTallyViewModel()
 
-    // Used to drive the return-date DatePicker (since it can’t bind to an optional directly)
-    @State private var returnDateDraft = Date()
-    
-    // UI State
-    @State private var showingSuccessAlert = false
-    @State private var savedTransactionType: TransactionType = .lend
-    
-    var filteredPeople: [Person] {
-        if searchText.isEmpty {
-            return allPeople
-        }
-        return allPeople.filter { person in
-            person.name.localizedCaseInsensitiveContains(searchText) ||
-            person.mobile.contains(searchText)
-        }
-    }
-    
-    var isNewPersonValid: Bool {
-        !newPersonName.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !newPersonMobile.trimmingCharacters(in: .whitespaces).isEmpty
-    }
-    
-    var isFormValid: Bool {
-        selectedPerson != nil && amount > 0
-    }
-    
     var body: some View {
         NavigationStack {
             Form {
                 createTallyTransactionTypeSection
 
                 CreateTallyPersonSelectorSection(
-                    filteredPeople: filteredPeople,
-                    isNewPersonValid: isNewPersonValid,
-                    searchText: $searchText,
-                    selectedPerson: $selectedPerson,
-                    showingCreatePersonSection: $showingCreatePersonSection,
-                    newPersonName: $newPersonName,
-                    newPersonMobile: $newPersonMobile,
-                    newPersonRelationship: $newPersonRelationship,
-                    showingContactPicker: $showingContactPicker,
-                    addAction: createAndSelectPerson
+                    people: allPeople,
+                    selectedPerson: $vm.selectedPerson,
+                    createPerson: { name, mobile, relationship in
+                        vm.createPerson(using: modelContext, name: name, mobile: mobile, relationship: relationship)
+                    }
                 )
 
                 createTallyAmountSection
 
                 CreateTallyTransactionDetailsSection(
-                    date: $date,
-                    mode: $mode,
-                    showingTransactionDatePicker: $showingTransactionDatePicker
+                    date: $vm.date,
+                    mode: $vm.mode,
+                    showingTransactionDatePicker: $vm.showingTransactionDatePicker
                 )
 
                 CreateTallyReturnDateSection(
-                    returnDate: $returnDate,
-                    returnDateDraft: $returnDateDraft,
-                    showingReturnDatePicker: $showingReturnDatePicker
+                    returnDate: $vm.returnDate,
+                    returnDateDraft: $vm.returnDateDraft,
+                    showingReturnDatePicker: $vm.showingReturnDatePicker
                 )
 
                 Section {
-                    TextField("Add a note about this transaction", text: $note, axis: .vertical)
+                    TextField("Add a note about this transaction", text: $vm.note, axis: .vertical)
                         .lineLimit(2...4)
                 } header: {
                     Text("Note (Optional)")
                 }
 
                 Section {
-                    ImagePicker(imageData: $recordImage)
+                    ImagePicker(imageData: $vm.recordImage)
                 } header: {
                     Text("Receipt/Record Image (Optional)")
                 } footer: {
@@ -102,35 +51,32 @@ struct CreateTallyView: View {
 
                 Section {
                     Button {
-                        saveTally()
+                        vm.saveTally(using: modelContext)
                     } label: {
                         HStack {
                             Spacer()
-                            
+
                             Label(
-                                transactionType == .lend ? "Record Lend" : "Record Borrow",
-                                systemImage: transactionType == .lend ? "arrow.up.circle.fill" : "arrow.down.circle.fill"
+                                vm.transactionType == .lend ? "Record Lend" : "Record Borrow",
+                                systemImage: vm.transactionType == .lend ? "arrow.up.circle.fill" : "arrow.down.circle.fill"
                             )
                             .font(.headline)
-                            
+
                             Spacer()
                         }
                     }
-                    .disabled(!isFormValid)
-                    .listRowBackground(isFormValid ? (transactionType == .lend ? Color.green : Color.red) : Color.gray.opacity(0.3))
+                    .disabled(!vm.isFormValid)
+                    .listRowBackground(vm.isFormValid ? (vm.transactionType == .lend ? Color.green : Color.red) : Color.gray.opacity(0.3))
                     .foregroundStyle(.white)
                 }
             }
             .navigationTitle("Create Tally")
-            .sheet(isPresented: $showingContactPicker) {
-                ContactPicker(selectedName: $newPersonName, selectedPhone: $newPersonMobile)
-            }
-            .sheet(isPresented: $showingTransactionDatePicker) {
+            .sheet(isPresented: $vm.showingTransactionDatePicker) {
                 NavigationStack {
                     VStack {
                         DatePicker(
                             "Transaction Date",
-                            selection: $date,
+                            selection: $vm.date,
                             displayedComponents: .date
                         )
                         .datePickerStyle(.graphical)
@@ -139,22 +85,22 @@ struct CreateTallyView: View {
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Done") {
-                                showingTransactionDatePicker = false
+                                vm.dismissTransactionDatePicker()
                             }
                         }
                     }
-                    .onChange(of: date) { _, _ in
-                        showingTransactionDatePicker = false
+                    .onChange(of: vm.date) { _, _ in
+                        vm.dismissTransactionDatePicker()
                     }
                 }
                 .presentationDetents([.large])
             }
-            .sheet(isPresented: $showingReturnDatePicker) {
+            .sheet(isPresented: $vm.showingReturnDatePicker) {
                 NavigationStack {
                     VStack {
                         DatePicker(
                             "Return By",
-                            selection: $returnDateDraft,
+                            selection: $vm.returnDateDraft,
                             in: Date()...,
                             displayedComponents: .date
                         )
@@ -164,99 +110,42 @@ struct CreateTallyView: View {
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Done") {
-                                // Persist whatever is currently selected.
-                                returnDate = returnDateDraft
-                                showingReturnDatePicker = false
+                                vm.didChangeReturnDateDraft(vm.returnDateDraft)
                             }
                         }
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Clear") {
-                                returnDate = nil
-                                showingReturnDatePicker = false
+                                vm.clearReturnDate()
                             }
                         }
                     }
-                    .onChange(of: returnDateDraft) { _, newValue in
-                        // Auto-dismiss as soon as the user picks a date.
-                        returnDate = newValue
-                        showingReturnDatePicker = false
+                    .onChange(of: vm.returnDateDraft) { _, newValue in
+                        vm.didChangeReturnDateDraft(newValue)
                     }
                 }
                 .presentationDetents([.medium])
             }
-            .alert("Tally Created!", isPresented: $showingSuccessAlert) {
+            .alert("Tally Created!", isPresented: $vm.showingSuccessAlert) {
                 Button("OK") {
-                    resetForm()
+                    vm.resetForm()
                 }
             } message: {
-                if let person = selectedPerson {
-                    Text("Successfully recorded \(savedTransactionType == .lend ? "lend to" : "borrow from") \(person.name)")
+                if let person = vm.selectedPerson {
+                    let actionText = vm.savedTransactionType == .lend ? "lend to" : "borrow from"
+                    Text("Successfully recorded \(actionText) \(person.name)")
                 } else {
                     Text("Transaction recorded successfully")
                 }
             }
         }
     }
-    
-    private func createAndSelectPerson() {
-        let trimmedRelationship = newPersonRelationship.trimmingCharacters(in: .whitespaces)
-        let person = Person(
-            name: newPersonName.trimmingCharacters(in: .whitespaces),
-            mobile: newPersonMobile.trimmingCharacters(in: .whitespaces),
-            relationship: trimmedRelationship.isEmpty ? nil : trimmedRelationship
-        )
-        modelContext.insert(person)
-        selectedPerson = person
-        showingCreatePersonSection = false
-        
-        // Clear new person fields
-        newPersonName = ""
-        newPersonMobile = ""
-        newPersonRelationship = ""
-        searchText = ""
-    }
-    
-    private func saveTally() {
-        guard let person = selectedPerson else { return }
-        
-        let transaction = Transaction(
-            amount: amount,
-            date: date,
-            mode: mode,
-            recordImage: recordImage,
-            returnDate: returnDate,
-            type: transactionType,
-            note: note.isEmpty ? nil : note
-        )
-        transaction.person = person
-        modelContext.insert(transaction)
-        
-        savedTransactionType = transactionType
-        showingSuccessAlert = true
-    }
-    
-    private func resetForm() {
-        selectedPerson = nil
-        searchText = ""
-        transactionType = .lend
-        amount = 0
-        date = Date()
-        mode = .cash
-        returnDate = nil
-        recordImage = nil
-        note = ""
-        showingCreatePersonSection = false
-        newPersonName = ""
-        newPersonMobile = ""
-        newPersonRelationship = ""
-    }
-    
+
     var createTallyTransactionTypeSection: some View {
         Section {
-            Picker("Transaction Type", selection: $transactionType) {
+            Picker("Transaction Type", selection: $vm.transactionType) {
                 Label("Borrow", systemImage: "arrow.down.circle.fill")
                     .tag(TransactionType.borrow)
-                
+
                 Label("Lend", systemImage: "arrow.up.circle.fill")
                 .tag(TransactionType.lend)
             }
@@ -266,14 +155,14 @@ struct CreateTallyView: View {
             Text("What do you want to do?")
         }
     }
-    
+
     var createTallyAmountSection: some View {
         Section {
             HStack {
                 Text("৳")
                     .font(.title2)
                     .foregroundStyle(.secondary)
-                TextField("Amount", value: $amount, format: .number)
+                TextField("Amount", value: $vm.amount, format: .number)
                     .keyboardType(.decimalPad)
                     .font(.title2)
             }

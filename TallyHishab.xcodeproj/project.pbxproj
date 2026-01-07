@@ -8,47 +8,57 @@
 
 /* Begin PBXBuildFile section */
 		6274EE752F0DE62F0053C958 /* CreateTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE732F0DE62F0053C958 /* CreateTallyView.swift */; };
-		6274EE782F0DF93A0053C958 /* CreateTallyTransactionDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE772F0DF92E0053C958 /* CreateTallyTransactionDetailsSection.swift */; };
-		6274EE7A2F0DF9660053C958 /* CreateTallyReturnDateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE792F0DF9650053C958 /* CreateTallyReturnDateSection.swift */; };
-		A101 /* TallyHishabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101 /* TallyHishabApp.swift */; };
-		A102 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B102 /* ContentView.swift */; };
-		A103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B103 /* Assets.xcassets */; };
-		A104 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = B104 /* Person.swift */; };
-		A105 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B105 /* Transaction.swift */; };
-		A106 /* FormatterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B106 /* FormatterHelper.swift */; };
-		A107 /* ContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B107 /* ContactPicker.swift */; };
-		A108 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108 /* ImagePicker.swift */; };
-		A109 /* PersonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B109 /* PersonListView.swift */; };
-		A110 /* AddPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B110 /* AddPersonView.swift */; };
-		A111 /* PersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111 /* PersonDetailView.swift */; };
-		A112 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B112 /* AddTransactionView.swift */; };
-		A113 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B113 /* TransactionDetailView.swift */; };
-		A114 /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B114 /* SettlementView.swift */; };
-		A115 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115 /* DashboardView.swift */; };
+		6274EE7D2F0DFEBA0053C958 /* CreateTallyReturnDateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE7B2F0DFEBA0053C958 /* CreateTallyReturnDateSection.swift */; };
+		6274EE7E2F0DFEBA0053C958 /* CreateTallyTransactionDetailsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE7C2F0DFEBA0053C958 /* CreateTallyTransactionDetailsSection.swift */; };
+		6274EE812F0E037F0053C958 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE802F0E037F0053C958 /* TransactionDetailView.swift */; };
+		6274EE822F0E037F0053C958 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE7F2F0E037F0053C958 /* AddTransactionView.swift */; };
+		6274EE862F0E038D0053C958 /* PersonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE852F0E038D0053C958 /* PersonListView.swift */; };
+		6274EE872F0E038D0053C958 /* PersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE842F0E038D0053C958 /* PersonDetailView.swift */; };
+		6274EE882F0E038D0053C958 /* AddPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE832F0E038D0053C958 /* AddPersonView.swift */; };
+		6274EE8A2F0E039E0053C958 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE892F0E039E0053C958 /* DashboardView.swift */; };
+		6274EE8C2F0E03AB0053C958 /* SettlementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE8B2F0E03AB0053C958 /* SettlementView.swift */; };
+		6274EE902F0E03BC0053C958 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE8F2F0E03BC0053C958 /* ImagePicker.swift */; };
+		6274EE912F0E03BC0053C958 /* ContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE8D2F0E03BC0053C958 /* ContactPicker.swift */; };
+		6274EE922F0E03BC0053C958 /* FormatterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE8E2F0E03BC0053C958 /* FormatterHelper.swift */; };
+		6274EE952F0E03CC0053C958 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE932F0E03CC0053C958 /* Person.swift */; };
+		6274EE962F0E03CC0053C958 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6274EE942F0E03CC0053C958 /* Transaction.swift */; };
+		A101 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A102 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A103 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		A104 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A105 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A106 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A107 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A108 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A109 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A110 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A111 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A112 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A113 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A114 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A115 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		C0110007 /* CreateTallyPersonSelectorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0110017 /* CreateTallyPersonSelectorSection.swift */; };
+		C0110100 /* CreateTallyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0110101 /* CreateTallyViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6274EE732F0DE62F0053C958 /* CreateTallyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyView.swift; sourceTree = "<group>"; };
-		6274EE772F0DF92E0053C958 /* CreateTallyTransactionDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyTransactionDetailsSection.swift; sourceTree = "<group>"; };
-		6274EE792F0DF9650053C958 /* CreateTallyReturnDateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyReturnDateSection.swift; sourceTree = "<group>"; };
-		B100 /* TallyHishab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TallyHishab.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B101 /* TallyHishabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TallyHishabApp.swift; sourceTree = "<group>"; };
-		B102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B104 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		B105 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		B106 /* FormatterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterHelper.swift; sourceTree = "<group>"; };
-		B107 /* ContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPicker.swift; sourceTree = "<group>"; };
-		B108 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		B109 /* PersonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListView.swift; sourceTree = "<group>"; };
-		B110 /* AddPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonView.swift; sourceTree = "<group>"; };
-		B111 /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
-		B112 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
-		B113 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
-		B114 /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
-		B115 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		6274EE7B2F0DFEBA0053C958 /* CreateTallyReturnDateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyReturnDateSection.swift; sourceTree = "<group>"; };
+		6274EE7C2F0DFEBA0053C958 /* CreateTallyTransactionDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyTransactionDetailsSection.swift; sourceTree = "<group>"; };
+		6274EE7F2F0E037F0053C958 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
+		6274EE802F0E037F0053C958 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
+		6274EE832F0E038D0053C958 /* AddPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonView.swift; sourceTree = "<group>"; };
+		6274EE842F0E038D0053C958 /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
+		6274EE852F0E038D0053C958 /* PersonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListView.swift; sourceTree = "<group>"; };
+		6274EE892F0E039E0053C958 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		6274EE8B2F0E03AB0053C958 /* SettlementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettlementView.swift; sourceTree = "<group>"; };
+		6274EE8D2F0E03BC0053C958 /* ContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPicker.swift; sourceTree = "<group>"; };
+		6274EE8E2F0E03BC0053C958 /* FormatterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterHelper.swift; sourceTree = "<group>"; };
+		6274EE8F2F0E03BC0053C958 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		6274EE932F0E03CC0053C958 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		6274EE942F0E03CC0053C958 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C0110017 /* CreateTallyPersonSelectorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyPersonSelectorSection.swift; sourceTree = "<group>"; };
+		C0110101 /* CreateTallyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +75,10 @@
 		6274EE742F0DE62F0053C958 /* CreateTally */ = {
 			isa = PBXGroup;
 			children = (
-				6274EE792F0DF9650053C958 /* CreateTallyReturnDateSection.swift */,
-				6274EE772F0DF92E0053C958 /* CreateTallyTransactionDetailsSection.swift */,
+				6274EE7B2F0DFEBA0053C958 /* CreateTallyReturnDateSection.swift */,
+				6274EE7C2F0DFEBA0053C958 /* CreateTallyTransactionDetailsSection.swift */,
 				6274EE732F0DE62F0053C958 /* CreateTallyView.swift */,
+				C0110101 /* CreateTallyViewModel.swift */,
 				C0110017 /* CreateTallyPersonSelectorSection.swift */,
 			);
 			path = CreateTally;
@@ -84,11 +95,9 @@
 		D101 /* TallyHishab */ = {
 			isa = PBXGroup;
 			children = (
-				B101 /* TallyHishabApp.swift */,
 				D103 /* Models */,
 				D104 /* Views */,
 				D105 /* Helpers */,
-				B103 /* Assets.xcassets */,
 			);
 			path = TallyHishab;
 			sourceTree = "<group>";
@@ -96,7 +105,6 @@
 		D102 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B100 /* TallyHishab.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,8 +112,8 @@
 		D103 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B104 /* Person.swift */,
-				B105 /* Transaction.swift */,
+				6274EE932F0E03CC0053C958 /* Person.swift */,
+				6274EE942F0E03CC0053C958 /* Transaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -114,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				6274EE742F0DE62F0053C958 /* CreateTally */,
-				B102 /* ContentView.swift */,
 				D106 /* Dashboard */,
 				D107 /* Person */,
 				D108 /* Transaction */,
@@ -126,9 +133,9 @@
 		D105 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B106 /* FormatterHelper.swift */,
-				B107 /* ContactPicker.swift */,
-				B108 /* ImagePicker.swift */,
+				6274EE8D2F0E03BC0053C958 /* ContactPicker.swift */,
+				6274EE8E2F0E03BC0053C958 /* FormatterHelper.swift */,
+				6274EE8F2F0E03BC0053C958 /* ImagePicker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -136,7 +143,7 @@
 		D106 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				B115 /* DashboardView.swift */,
+				6274EE892F0E039E0053C958 /* DashboardView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -144,9 +151,9 @@
 		D107 /* Person */ = {
 			isa = PBXGroup;
 			children = (
-				B109 /* PersonListView.swift */,
-				B110 /* AddPersonView.swift */,
-				B111 /* PersonDetailView.swift */,
+				6274EE832F0E038D0053C958 /* AddPersonView.swift */,
+				6274EE842F0E038D0053C958 /* PersonDetailView.swift */,
+				6274EE852F0E038D0053C958 /* PersonListView.swift */,
 			);
 			path = Person;
 			sourceTree = "<group>";
@@ -154,8 +161,8 @@
 		D108 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
-				B112 /* AddTransactionView.swift */,
-				B113 /* TransactionDetailView.swift */,
+				6274EE7F2F0E037F0053C958 /* AddTransactionView.swift */,
+				6274EE802F0E037F0053C958 /* TransactionDetailView.swift */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -163,7 +170,7 @@
 		D109 /* Settlement */ = {
 			isa = PBXGroup;
 			children = (
-				B114 /* SettlementView.swift */,
+				6274EE8B2F0E03AB0053C958 /* SettlementView.swift */,
 			);
 			path = Settlement;
 			sourceTree = "<group>";
@@ -185,7 +192,6 @@
 			);
 			name = TallyHishab;
 			productName = TallyHishab;
-			productReference = B100 /* TallyHishab.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -226,7 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A103 /* Assets.xcassets in Resources */,
+				A103 /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,24 +243,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A101 /* TallyHishabApp.swift in Sources */,
-				A102 /* ContentView.swift in Sources */,
-				A104 /* Person.swift in Sources */,
+				A101 /* (null) in Sources */,
+				A102 /* (null) in Sources */,
+				A104 /* (null) in Sources */,
+				6274EE812F0E037F0053C958 /* TransactionDetailView.swift in Sources */,
+				6274EE822F0E037F0053C958 /* AddTransactionView.swift in Sources */,
+				6274EE8C2F0E03AB0053C958 /* SettlementView.swift in Sources */,
 				6274EE752F0DE62F0053C958 /* CreateTallyView.swift in Sources */,
-				A105 /* Transaction.swift in Sources */,
-				A106 /* FormatterHelper.swift in Sources */,
-				A107 /* ContactPicker.swift in Sources */,
-				A108 /* ImagePicker.swift in Sources */,
-				A109 /* PersonListView.swift in Sources */,
-				A110 /* AddPersonView.swift in Sources */,
-				6274EE7A2F0DF9660053C958 /* CreateTallyReturnDateSection.swift in Sources */,
-				6274EE782F0DF93A0053C958 /* CreateTallyTransactionDetailsSection.swift in Sources */,
-				A111 /* PersonDetailView.swift in Sources */,
-				A112 /* AddTransactionView.swift in Sources */,
-				A113 /* TransactionDetailView.swift in Sources */,
-				A114 /* SettlementView.swift in Sources */,
-				A115 /* DashboardView.swift in Sources */,
+				A105 /* (null) in Sources */,
+				6274EE8A2F0E039E0053C958 /* DashboardView.swift in Sources */,
+				A106 /* (null) in Sources */,
+				6274EE862F0E038D0053C958 /* PersonListView.swift in Sources */,
+				6274EE872F0E038D0053C958 /* PersonDetailView.swift in Sources */,
+				6274EE882F0E038D0053C958 /* AddPersonView.swift in Sources */,
+				6274EE7D2F0DFEBA0053C958 /* CreateTallyReturnDateSection.swift in Sources */,
+				6274EE952F0E03CC0053C958 /* Person.swift in Sources */,
+				6274EE962F0E03CC0053C958 /* Transaction.swift in Sources */,
+				6274EE7E2F0DFEBA0053C958 /* CreateTallyTransactionDetailsSection.swift in Sources */,
+				A107 /* (null) in Sources */,
+				A108 /* (null) in Sources */,
+				A109 /* (null) in Sources */,
+				A110 /* (null) in Sources */,
+				A111 /* (null) in Sources */,
+				A112 /* (null) in Sources */,
+				A113 /* (null) in Sources */,
+				A114 /* (null) in Sources */,
+				A115 /* (null) in Sources */,
+				6274EE902F0E03BC0053C958 /* ImagePicker.swift in Sources */,
+				6274EE912F0E03BC0053C958 /* ContactPicker.swift in Sources */,
+				6274EE922F0E03BC0053C958 /* FormatterHelper.swift in Sources */,
 				C0110007 /* CreateTallyPersonSelectorSection.swift in Sources */,
+				C0110100 /* CreateTallyViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,25 +1,42 @@
 import SwiftUI
 
-/// A single section that handles:
+/// A self-contained section that handles:
 /// - Searching and selecting an existing `Person`
-/// - Optionally creating a new `Person` inline
-/// - Triggering the contacts picker (delegated to the parent via `showingContactPicker` binding)
+/// - Creating a new `Person` inline
+/// - Picking from Contacts (optional)
+///
+/// This view owns all UI state required for the flow and returns the selected `Person` via `selectedPerson`.
 struct CreateTallyPersonSelectorSection: View {
-    let filteredPeople: [Person]
-    let isNewPersonValid: Bool
+    let people: [Person]
 
-    @Binding var searchText: String
     @Binding var selectedPerson: Person?
 
-    @Binding var showingCreatePersonSection: Bool
+    /// Creates and persists a person, returning the newly created `Person`.
+    /// (The parent decides how persistence is done, e.g. via SwiftData ModelContext.)
+    let createPerson: (_ name: String, _ mobile: String, _ relationship: String?) -> Person
 
-    @Binding var newPersonName: String
-    @Binding var newPersonMobile: String
-    @Binding var newPersonRelationship: String
+    // UI State (owned here)
+    @State private var searchText = ""
+    @State private var showingCreatePersonSection = false
 
-    @Binding var showingContactPicker: Bool
+    @State private var newPersonName = ""
+    @State private var newPersonMobile = ""
+    @State private var newPersonRelationship = ""
 
-    let addAction: () -> Void
+    @State private var showingContactPicker = false
+
+    private var filteredPeople: [Person] {
+        guard !searchText.isEmpty else { return people }
+        return people.filter { person in
+            person.name.localizedCaseInsensitiveContains(searchText) ||
+            person.mobile.contains(searchText)
+        }
+    }
+
+    private var isNewPersonValid: Bool {
+        !newPersonName.trimmingCharacters(in: .whitespaces).isEmpty &&
+        !newPersonMobile.trimmingCharacters(in: .whitespaces).isEmpty
+    }
 
     var body: some View {
         Section {
@@ -28,6 +45,7 @@ struct CreateTallyPersonSelectorSection: View {
             } else {
                 searchAndResults
 
+                // Show create option when no results match the search
                 if filteredPeople.isEmpty {
                     createNewToggle
                 }
@@ -42,6 +60,9 @@ struct CreateTallyPersonSelectorSection: View {
             if selectedPerson == nil {
                 Text("Search existing contacts by name or mobile number")
             }
+        }
+        .sheet(isPresented: $showingContactPicker) {
+            ContactPicker(selectedName: $newPersonName, selectedPhone: $newPersonMobile)
         }
     }
 
@@ -65,8 +86,7 @@ struct CreateTallyPersonSelectorSection: View {
 
             Button("Change") {
                 selectedPerson = nil
-                searchText = ""
-                showingCreatePersonSection = false
+                resetLocalState(keepSearch: false)
             }
             .buttonStyle(.bordered)
         }
@@ -82,8 +102,7 @@ struct CreateTallyPersonSelectorSection: View {
                 ForEach(filteredPeople.prefix(5)) { person in
                     Button {
                         selectedPerson = person
-                        searchText = ""
-                        showingCreatePersonSection = false
+                        resetLocalState(keepSearch: false)
                     } label: {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
@@ -109,13 +128,8 @@ struct CreateTallyPersonSelectorSection: View {
         Button {
             showingCreatePersonSection.toggle()
 
-            if showingCreatePersonSection && !searchText.isEmpty {
-                // Pre-fill if search text looks like a phone number
-                if searchText.first?.isNumber == true || searchText.first == "+" {
-                    newPersonMobile = searchText
-                } else {
-                    newPersonName = searchText
-                }
+            if showingCreatePersonSection {
+                prefillNewPersonFieldsFromSearchIfNeeded()
             }
         } label: {
             Label(
@@ -144,10 +158,53 @@ struct CreateTallyPersonSelectorSection: View {
             TextField("Relationship (Optional)", text: $newPersonRelationship)
                 .autocorrectionDisabled()
 
-            Button(action: addAction) {
+            Button {
+                addAndSelectPerson()
+            } label: {
                 Label("Add & Select Person", systemImage: "checkmark.circle.fill")
             }
             .disabled(!isNewPersonValid)
         }
+    }
+
+    private func addAndSelectPerson() {
+        let name = newPersonName.trimmingCharacters(in: .whitespaces)
+        let mobile = newPersonMobile.trimmingCharacters(in: .whitespaces)
+        let relationshipTrimmed = newPersonRelationship.trimmingCharacters(in: .whitespaces)
+        let relationship = relationshipTrimmed.isEmpty ? nil : relationshipTrimmed
+
+        let person = createPerson(name, mobile, relationship)
+        selectedPerson = person
+
+        resetLocalState(keepSearch: false)
+    }
+
+    private func prefillNewPersonFieldsFromSearchIfNeeded() {
+        guard !searchText.isEmpty else { return }
+
+        // Pre-fill if search text looks like a phone number
+        if searchText.first?.isNumber == true || searchText.first == "+" {
+            if newPersonMobile.trimmingCharacters(in: .whitespaces).isEmpty {
+                newPersonMobile = searchText
+            }
+        } else {
+            if newPersonName.trimmingCharacters(in: .whitespaces).isEmpty {
+                newPersonName = searchText
+            }
+        }
+    }
+
+    private func resetLocalState(keepSearch: Bool) {
+        if !keepSearch {
+            searchText = ""
+        }
+
+        showingCreatePersonSection = false
+
+        newPersonName = ""
+        newPersonMobile = ""
+        newPersonRelationship = ""
+
+        showingContactPicker = false
     }
 }
