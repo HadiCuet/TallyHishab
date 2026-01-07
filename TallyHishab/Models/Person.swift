@@ -5,14 +5,16 @@ import SwiftData
 final class Person {
     var name: String
     var mobile: String
+    var email: String?
     var relationship: String?
     
     @Relationship(deleteRule: .cascade, inverse: \Transaction.person)
     var transactions: [Transaction] = []
     
-    init(name: String, mobile: String, relationship: String? = nil) {
+    init(name: String, mobile: String, email: String? = nil, relationship: String? = nil) {
         self.name = name
         self.mobile = mobile
+        self.email = email
         self.relationship = relationship
     }
     

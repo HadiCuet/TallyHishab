@@ -5,7 +5,6 @@ struct PersonListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Person.name) private var people: [Person]
     
-    @State private var showingAddPerson = false
     @State private var searchText = ""
     
     var filteredPeople: [Person] {
@@ -20,38 +19,41 @@ struct PersonListView: View {
     
     var body: some View {
         NavigationStack {
-            Group {
-                if people.isEmpty {
-                    ContentUnavailableView(
-                        "No Contacts",
-                        systemImage: "person.2",
-                        description: Text("Add people to track lend and borrow transactions")
-                    )
-                } else {
-                    List {
-                        ForEach(filteredPeople) { person in
-                            NavigationLink(destination: PersonDetailView(person: person)) {
-                                PersonRowView(person: person)
+            ZStack(alignment: .bottomTrailing) {
+                Group {
+                    if people.isEmpty {
+                        ContentUnavailableView(
+                            "No Contacts",
+                            systemImage: "person.2",
+                            description: Text("Add people to track lend and borrow transactions")
+                        )
+                    } else {
+                        List {
+                            ForEach(filteredPeople) { person in
+                                NavigationLink(destination: PersonDetailView(person: person)) {
+                                    PersonRowView(person: person)
+                                }
                             }
+                            .onDelete(perform: deletePeople)
                         }
-                        .onDelete(perform: deletePeople)
+                        .searchable(text: $searchText, prompt: "Search by name or mobile")
                     }
-                    .searchable(text: $searchText, prompt: "Search by name or mobile")
                 }
+                
+                NavigationLink {
+                    AddPersonView()
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.title.bold())
+                        .foregroundStyle(.white)
+                        .frame(width: 60, height: 60)
+                        .background(Color.blue)
+                        .clipShape(Circle())
+                        .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 4)
+                }
+                .padding(24)
             }
             .navigationTitle("People")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        showingAddPerson = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-            .sheet(isPresented: $showingAddPerson) {
-                AddPersonView()
-            }
         }
     }
     

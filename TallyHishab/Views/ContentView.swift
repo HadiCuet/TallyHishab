@@ -8,6 +8,11 @@ struct ContentView: View {
                     Label("Dashboard", systemImage: "chart.pie.fill")
                 }
             
+            CreateTallyView()
+                .tabItem {
+                    Label("Create", systemImage: "plus.circle.fill")
+                }
+            
             PersonListView()
                 .tabItem {
                     Label("People", systemImage: "person.2.fill")
