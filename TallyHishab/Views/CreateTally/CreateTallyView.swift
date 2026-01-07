@@ -56,7 +56,7 @@ struct CreateTallyView: View {
     var body: some View {
         NavigationStack {
             Form {
-                CreateTallyTransactionTypeSection(transactionType: $transactionType)
+                createTallyTransactionTypeSection
 
                 CreateTallyPersonSelectorSection(
                     filteredPeople: filteredPeople,
@@ -71,7 +71,7 @@ struct CreateTallyView: View {
                     addAction: createAndSelectPerson
                 )
 
-                CreateTallyAmountSection(amount: $amount)
+                createTallyAmountSection
 
                 CreateTallyTransactionDetailsSection(
                     date: $date,
@@ -106,11 +106,13 @@ struct CreateTallyView: View {
                     } label: {
                         HStack {
                             Spacer()
+                            
                             Label(
                                 transactionType == .lend ? "Record Lend" : "Record Borrow",
                                 systemImage: transactionType == .lend ? "arrow.up.circle.fill" : "arrow.down.circle.fill"
                             )
                             .font(.headline)
+                            
                             Spacer()
                         }
                     }
@@ -248,12 +250,8 @@ struct CreateTallyView: View {
         newPersonMobile = ""
         newPersonRelationship = ""
     }
-}
-
-struct CreateTallyTransactionTypeSection: View {
-    @Binding var transactionType: TransactionType
-
-    var body: some View {
+    
+    var createTallyTransactionTypeSection: some View {
         Section {
             Picker("Transaction Type", selection: $transactionType) {
                 Label("Borrow", systemImage: "arrow.down.circle.fill")
@@ -268,12 +266,8 @@ struct CreateTallyTransactionTypeSection: View {
             Text("What do you want to do?")
         }
     }
-}
-
-struct CreateTallyAmountSection: View {
-    @Binding var amount: Double
-
-    var body: some View {
+    
+    var createTallyAmountSection: some View {
         Section {
             HStack {
                 Text("৳")
@@ -285,72 +279,6 @@ struct CreateTallyAmountSection: View {
             }
         } header: {
             Text("Amount")
-        }
-    }
-}
-
-struct CreateTallyTransactionDetailsSection: View {
-    @Binding var date: Date
-    @Binding var mode: PaymentMode
-    @Binding var showingTransactionDatePicker: Bool
-
-    var body: some View {
-        Section {
-            Button {
-                showingTransactionDatePicker = true
-            } label: {
-                HStack {
-                    Text("Transaction Date")
-                    Spacer()
-                    Text(date.formatted(date: .abbreviated, time: .omitted))
-                        .foregroundStyle(.secondary)
-                }
-            }
-
-            Picker("Payment Mode", selection: $mode) {
-                ForEach(PaymentMode.allCases, id: \.self) { paymentMode in
-                    Text(paymentMode.rawValue).tag(paymentMode)
-                }
-            }
-        } header: {
-            Text("Transaction Details")
-        }
-    }
-}
-
-struct CreateTallyReturnDateSection: View {
-    @Binding var returnDate: Date?
-    @Binding var returnDateDraft: Date
-    @Binding var showingReturnDatePicker: Bool
-
-    var body: some View {
-        Section {
-            Button {
-                // If the value is currently nil, initialize a sensible default before opening.
-                let today = Calendar.current.startOfDay(for: Date())
-                if let existing = returnDate {
-                    returnDateDraft = max(existing, today)
-                } else {
-                    returnDateDraft = today
-                }
-                showingReturnDatePicker = true
-            } label: {
-                HStack {
-                    Text("Return By")
-                    Spacer()
-                    if let returnDate {
-                        Text(returnDate.formatted(date: .abbreviated, time: .omitted))
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text("Not set")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            }
-        } header: {
-            Text("Return Date (Optional)")
-        } footer: {
-            Text("Tap to set a reminder date for when the money should be returned")
         }
     }
 }
