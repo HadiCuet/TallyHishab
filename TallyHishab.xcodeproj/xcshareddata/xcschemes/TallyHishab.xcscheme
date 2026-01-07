@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E100"
-               BuildableName = "TallyHishab"
+               BuildableName = "TallyHishab.app"
                BlueprintName = "TallyHishab"
                ReferencedContainer = "container:TallyHishab.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E100"
-            BuildableName = "TallyHishab"
+            BuildableName = "TallyHishab.app"
             BlueprintName = "TallyHishab"
             ReferencedContainer = "container:TallyHishab.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E100"
-            BuildableName = "TallyHishab"
+            BuildableName = "TallyHishab.app"
             BlueprintName = "TallyHishab"
             ReferencedContainer = "container:TallyHishab.xcodeproj">
          </BuildableReference>

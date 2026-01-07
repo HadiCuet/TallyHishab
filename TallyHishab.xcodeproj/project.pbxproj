@@ -44,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DEADBEEFDEADBEEFDEAD0099 /* TallyHishab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TallyHishab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6274EE732F0DE62F0053C958 /* CreateTallyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyView.swift; sourceTree = "<group>"; };
 		6274EE7B2F0DFEBA0053C958 /* CreateTallyReturnDateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyReturnDateSection.swift; sourceTree = "<group>"; };
 		6274EE7C2F0DFEBA0053C958 /* CreateTallyTransactionDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTallyTransactionDetailsSection.swift; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 		D102 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				DEADBEEFDEADBEEFDEAD0099 /* TallyHishab.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,6 +200,7 @@
 			);
 			name = TallyHishab;
 			productName = TallyHishab;
+			productReference = DEADBEEFDEADBEEFDEAD0099 /* TallyHishab.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
